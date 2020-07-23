@@ -137,7 +137,15 @@ takes an album id via the url and returns json object in this format:
 
 #### PATCH /bands/<int:band_id>
 requires_auth(patch:band)
-takes a band id via the url and returns json object in this format:
+takes a band id via the url and a json object of a band in the format 
+```bash
+{
+    'name': 'band_name',
+    'city': 'some city',
+    'state': 'MO'
+}
+```
+and returns a json object in this format:
 ```bash
 {
     'success': True,
@@ -151,7 +159,14 @@ takes a band id via the url and returns json object in this format:
 
 #### PATCH /albums/<int:album_id>
 requires_auth(patch:album)
-takes an album id via the url and returns json object in this format:
+takes an album id via the url and an album in the following json format:
+```bash
+{
+    'title': 'album_title',
+    'band_id': int
+}
+```
+and returns a json object in this format:
 ```bash
 {
     'success': True,
