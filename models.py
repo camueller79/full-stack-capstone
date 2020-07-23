@@ -2,7 +2,7 @@ import os
 from flask_sqlalchemy import SQLAlchemy
 
 database_name = "capstone"
-database_path = os.environ.get('DATABASE_URL', 'postgres://{}/{}'.format('localhost:5432', database_name))
+database_path = os.environ.get('DATABASE_URL')
 
 db = SQLAlchemy()
 
@@ -11,6 +11,7 @@ def setup_db(app):
     app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db.app = app
     db.init_app(app)
+    # migrate = Migrate(app, db)
 
 def db_drop_and_create_all():
     db.drop_all()
