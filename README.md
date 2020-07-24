@@ -76,7 +76,7 @@ returns json object list of albums
 #### POST /bands
 requires_auth(post:band)
 takes a json object of a band in the format 
-```bash
+```javascript
 {
     'name': 'band_name',
     'city': 'some city',
@@ -84,7 +84,7 @@ takes a json object of a band in the format
 }
 ```
 and returns a json object like this:
-```bash
+```javascript
 {
     'success': True,
     'band': {
@@ -98,14 +98,14 @@ and returns a json object like this:
 #### POST /albums
 requires_auth(post:album)
 takes a json object of an album in the format 
-```bash
+```javascript
 {
     'title': 'album_title',
     'band_id': int
 }
 ```
 and returns a json object like this:
-```bash
+```javascript
 {
     'success': True,
     'album': {
@@ -118,7 +118,7 @@ and returns a json object like this:
 #### DELETE /bands/<int:band_id>
 requires_auth(delete:band)
 takes a band id via the url and returns json object in this format:
-```bash
+```javascript
 {
     'success': True,
     'band_id': int
@@ -128,7 +128,7 @@ takes a band id via the url and returns json object in this format:
 #### DELETE /albums/<int:album_id>
 requires_auth(delete:band)
 takes an album id via the url and returns json object in this format:
-```bash
+```javascript
 {
     'success': True,
     'album_id': int
@@ -138,7 +138,7 @@ takes an album id via the url and returns json object in this format:
 #### PATCH /bands/<int:band_id>
 requires_auth(patch:band)
 takes a band id via the url and a json object of a band in the format 
-```bash
+```javascript
 {
     'name': 'band_name',
     'city': 'some city',
@@ -146,7 +146,7 @@ takes a band id via the url and a json object of a band in the format
 }
 ```
 and returns a json object in this format:
-```bash
+```javascript
 {
     'success': True,
     'band': {
@@ -160,14 +160,14 @@ and returns a json object in this format:
 #### PATCH /albums/<int:album_id>
 requires_auth(patch:album)
 takes an album id via the url and an album in the following json format:
-```bash
+```javascript
 {
     'title': 'album_title',
     'band_id': int
 }
 ```
 and returns a json object in this format:
-```bash
+```javascript
 {
     'success': True,
     'band': {
