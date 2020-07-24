@@ -73,7 +73,7 @@ returns json object list of bands
 requires_auth(get:albums)
 returns json object list of albums
 
-#### POST /bands/add
+#### POST /bands
 requires_auth(post:band)
 takes a json object of a band in the format 
 ```bash
@@ -95,7 +95,7 @@ and returns a json object like this:
 }
 ```
 
-#### POST /albums/add
+#### POST /albums
 requires_auth(post:album)
 takes a json object of an album in the format 
 ```bash
