@@ -5,6 +5,7 @@ from flask_cors import CORS
 from models import db_init_records, setup_db, Album, Band, db
 from auth import AuthError, requires_auth
 
+
 def create_app(test_config=None):
     app = Flask(__name__)
     CORS(app, resources={r"/api/": {"origins": "*"}})
@@ -12,14 +13,18 @@ def create_app(test_config=None):
 
     @app.after_request
     def after_request(response):
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type, Authorization, true')
-        response.headers.add('Access-Control-Allow-Methods', 'GET, PATCH, POST, DELETE, OPTIONS')
+        response.headers.add(
+            'Access-Control-Allow-Headers',
+            'Content-Type, Authorization, true')
+        response.headers.add(
+            'Access-Control-Allow-Methods',
+            'GET, PATCH, POST, DELETE, OPTIONS')
         return response
 
     @app.route('/')
     def index():
         return render_template('home.html')
-    
+
     @app.route('/bands')
     @requires_auth('get:bands')
     def get_bands(payload):
@@ -43,8 +48,8 @@ def create_app(test_config=None):
 
         albums = [album.format() for album in albums]
         return jsonify(albums)
-    
-    @app.route('/bands/add', methods=['POST'])
+
+    @app.route('/bands', methods=['POST'])
     @requires_auth('post:band')
     def post_newbands(payload):
         # takes a JSON object with new artist to add to database
@@ -53,12 +58,12 @@ def create_app(test_config=None):
         name = body.get('name', None)
         city = body.get('city', None)
         state = body.get('state', None)
-        
-        if name == None:
+
+        if name is None:
             abort(400)
-        if city == None:
+        if city is None:
             abort(400)
-        if state == None:
+        if state is None:
             abort(400)
 
         band = Band(name=name, city=city, state=state)
@@ -69,8 +74,8 @@ def create_app(test_config=None):
             'success': True,
             'band': new_band
         })
-    
-    @app.route('/albums/add', methods=['POST'])
+
+    @app.route('/albums', methods=['POST'])
     @requires_auth('post:album')
     def post_new_album(payload):
         # takes a JSON object with new album to add to database
@@ -79,9 +84,9 @@ def create_app(test_config=None):
         title = body.get('title', None)
         band_id = body.get('band_id', None)
 
-        if title == None:
+        if title is None:
             abort(400)
-        if band_id == None:
+        if band_id is None:
             abort(400)
 
         album = Album(title=title, band_id=band_id)
@@ -105,7 +110,7 @@ def create_app(test_config=None):
             'success': True,
             'band': band_id
         })
-    
+
     @app.route('/albums/<int:album_id>', methods=['DELETE'])
     @requires_auth('delete:album')
     def delete_album(payload, album_id):
@@ -113,13 +118,13 @@ def create_app(test_config=None):
         album = Album.query.filter(Album.id == album_id).one_or_none()
         if album is None:
             abort(404)
-        
+
         album.delete()
         return jsonify({
             'success': True,
             'album': album_id
         })
-    
+
     @app.route('/bands/<int:band_id>', methods=['PATCH'])
     @requires_auth('patch:band')
     def patch_band(payload, band_id):
@@ -177,6 +182,7 @@ def create_app(test_config=None):
             'success': True,
             'album': album.format()
         })
+
     @app.errorhandler(404)
     def not_found(error):
         return jsonify({
@@ -184,7 +190,7 @@ def create_app(test_config=None):
             'error': 404,
             'message': 'Resource not found'
         }), 404
-    
+
     @app.errorhandler(400)
     def unprocessable(error):
         return jsonify({
@@ -202,6 +208,7 @@ def create_app(test_config=None):
         }), auth_error.status_code
 
     return app
+
 
 app = create_app()
 
